@@ -4,9 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
+@RestController
 public class DisastersuppliesApplication {
+
+  // itemListはクラス変数かインスタンス変数か。クラス変数
+  static Map<Integer, String> itemList = new HashMap<>();
 
   public static void main(String[] args) {
     SpringApplication.run(DisastersuppliesApplication.class, args);
@@ -19,10 +25,19 @@ public class DisastersuppliesApplication {
     System.out.println(itemName);
     System.out.println(quantity);
 
-    // Map使ってみる
-    Map<String, Integer> itemList = new HashMap<>();
-    itemList.put("water", 1);
+    DisastersuppliesApplication.putItem();
+    DisastersuppliesApplication.getItems();
+  }
+
+  // メソッドの種類は？共通のクラスメソッドで
+  public static void putItem() {
+    itemList.put(2, "food");
+    itemList.put(3, "dryBattery");
     System.out.println(itemList);
   }
 
+  @GetMapping("/items")
+  public static Map getItems() {
+    return DisastersuppliesApplication.itemList;
+  }
 }
